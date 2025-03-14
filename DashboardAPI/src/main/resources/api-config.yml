@@ -1,0 +1,4 @@
+apis:
+  opensky:
+    username: ${API_USERNAME}
+    password: ${API_PASSWORD}
