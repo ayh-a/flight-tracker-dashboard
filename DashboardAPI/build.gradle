@@ -12,16 +12,17 @@ plugins {
 
 repositories {
     mavenLocal()
+    mavenCentral()
     maven {
         url = uri('https://repo.maven.apache.org/maven2/')
     }
 }
 
 dependencies {
-    api libs.org.springframework.boot.spring.boot.starter.data.redis
-    api libs.org.springframework.boot.spring.boot.starter.web
-    api libs.org.springframework.boot.spring.boot.starter.webflux
-    api libs.org.opensky.opensky.api
+    implementation libs.org.springframework.boot.spring.boot.starter.data.redis
+    implementation libs.org.springframework.boot.spring.boot.starter.web
+    implementation libs.org.springframework.boot.spring.boot.starter.webflux
+    implementation libs.org.opensky.opensky.api
     testImplementation libs.org.springframework.boot.spring.boot.starter.test
     testImplementation libs.io.projectreactor.reactor.test
 }
