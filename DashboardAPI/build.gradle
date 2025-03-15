@@ -41,6 +41,14 @@ publishing {
     }
 }
 
+//bootRun {
+//    environment = [
+//            'API_USERNAME': System.getenv('API_USERNAME') ?: System.getProperty('API_USERNAME') ?: '',
+//            'API_PASSWORD': System.getenv('API_PASSWORD') ?: System.getProperty('API_PASSWORD') ?: ''
+//    ]
+//    systemProperty 'java.io.tmpdir', project.buildDir.absolutePath + '/tmp'
+//}
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
