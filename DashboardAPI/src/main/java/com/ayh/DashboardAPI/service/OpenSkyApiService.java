@@ -1,17 +1,16 @@
 package com.ayh.DashboardAPI.service;
 
 import org.opensky.api.OpenSkyApi;
+import org.opensky.model.OpenSkyStates;
+import org.opensky.model.StateVector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.List;
+
 @Service
 public class OpenSkyApiService implements ApiService {
-//    @Value("${apis.opensky.username}")
-//    private String username;
-
-//    @Value("${apis.opensky.password}")
-//    private String password;
-
     private final OpenSkyApi api;
 
     public OpenSkyApiService(@Value("${apis.opensky.username}") String username,
@@ -19,9 +18,12 @@ public class OpenSkyApiService implements ApiService {
         api = new OpenSkyApi(username, password);
     }
 
-//    public Object getAllStates() {
-//      TODO: implement
-//    }
+    public List<?> getAllStates() throws IOException {
+        // get all current state vectors
+        OpenSkyStates states = api.getStates(0, null);
+
+        return states.getStates().stream().toList();
+    }
 
 //    public Object GetAllStatesInBoundingBox() {
 //      TODO: implement
