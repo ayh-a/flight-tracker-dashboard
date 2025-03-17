@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class DashboardController {
     /**
      * Aggregated data based on user location
+     * json reponse:
+     *      - All state vectors for overall flight statistics
+     *      - Start vectors within intial bounding box (defaulted to user location)
+     *      - Weather based on user location
      */
     @GetMapping("/dashboard")
     public void dashboard() {
