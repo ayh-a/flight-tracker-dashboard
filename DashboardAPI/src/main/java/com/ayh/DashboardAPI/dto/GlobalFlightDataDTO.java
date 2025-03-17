@@ -1,4 +1,4 @@
 package com.ayh.DashboardAPI.dto;
 
-public record GlobalFlightDataDTO() {
+public record GlobalFlightDataDTO(FlightSummaryStatsDTO flightSummaryStatsDTO) {
 }

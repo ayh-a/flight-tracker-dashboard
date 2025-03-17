@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,9 +25,22 @@ public class OpenSkyApiService implements ApiService {
      */
     public List<StateVector> getAllStates() throws IOException {
         // get all current state vectors
-        OpenSkyStates states = api.getStates(0, null);
+        try {
+            OpenSkyStates states = api.getStates(0, null);
 
-        return states.getStates().stream().toList();
+            if (states == null) {
+                return Collections.emptyList();
+            }
+
+            List<StateVector> stateList = (List<StateVector>) states.getStates();
+
+            return stateList != null ? stateList : Collections.emptyList();
+        } catch (Exception e) {
+            throw e;
+        }
+
+
+//        return states.getStates().stream().toList();
     }
 
 //    public Object GetAllStatesInBoundingBox() {
