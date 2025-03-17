@@ -18,7 +18,11 @@ public class OpenSkyApiService implements ApiService {
         api = new OpenSkyApi(username, password);
     }
 
-    public List<?> getAllStates() throws IOException {
+    /**
+     * @return List of global state vectors
+     * @throws IOException if there was a http error
+     */
+    public List<StateVector> getAllStates() throws IOException {
         // get all current state vectors
         OpenSkyStates states = api.getStates(0, null);
 
