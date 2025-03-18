@@ -2,3 +2,5 @@ apis:
   opensky:
     username: ${API_USERNAME}
     password: ${API_PASSWORD}
+  weather:
+    key: ${WEATHER_API_KEY}

@@ -26,6 +26,7 @@ dependencies {
     implementation libs.org.opensky.opensky.api
     testImplementation libs.org.springframework.boot.spring.boot.starter.test
     testImplementation libs.io.projectreactor.reactor.test
+    compile "io.swagger:swagger-java-client:1.0.0"
 }
 
 group = 'com.ayh'
