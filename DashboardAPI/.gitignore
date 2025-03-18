@@ -34,3 +34,4 @@ build/
 .gradle/
 .env
 build/
+*.sh
