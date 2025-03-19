@@ -11,11 +11,14 @@ public record WeatherDataDTO(String location,
                              String conditionIcon,
                              double precipitation,
                              double visibility,
-                             double airQuality) {
+                             double pressure,
+                             int uvIndex,
+                             int airQuality) {
 
     public static WeatherDataDTO createDefault() {
         return new WeatherDataDTO(
                 "Unknown", 0.0, 0.0, 0, 0.0, "Unknown",
-                "Unknown", 0, "", 0, 0.0, 0.0);
+                "Unknown", 0, "", 0.0, 0.0, 0.0, 0, 0
+        );
     }
 }
