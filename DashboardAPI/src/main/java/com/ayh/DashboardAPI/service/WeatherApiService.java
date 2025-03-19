@@ -33,6 +33,7 @@ public class WeatherApiService implements ApiService{
                     return Mono.just(WeatherDataDTO.createDefault());
                 });
     }
+
     private WeatherDataDTO parseWeatherData(JsonNode root) {
         try {
             if (root.has("data") && root.get("data").isArray() && root.get("data").size() > 0) {
