@@ -19,11 +19,9 @@ public class DashboardController {
     }
 
     /**
-     * Aggregated data based on user location
-     * json reponse:
-     *      - All state vectors for overall flight statistics
-     *      - Start vectors within intial bounding box (defaulted to user location)
-     *      - Weather based on user location
+     * Aggregated data based on user location.
+     * Includes global flight summary and weather data based on lat and lon parameters.
+     * Default location is Toronto
      */
     @GetMapping("/dashboard")
     public GlobalFlightDataDTO dashboard(
