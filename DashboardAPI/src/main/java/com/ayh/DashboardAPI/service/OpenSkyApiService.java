@@ -43,9 +43,16 @@ public class OpenSkyApiService implements ApiService {
 //        return states.getStates().stream().toList();
     }
 
-//    public Object GetAllStatesInBoundingBox() {
-//      TODO: implement
-//    }
+    public List<StateVector> GetAllStatesInBoundingBox(double minLat, double maxLat, double minLng, double maxLng) throws IOException {
+      OpenSkyApi.BoundingBox bbox = new OpenSkyApi.BoundingBox(minLat, maxLat, minLng, maxLng);
+      OpenSkyStates statesInBounds = api.getStates(0, null, bbox);
+
+      if (statesInBounds != null) {
+          return (List<StateVector>) statesInBounds.getStates();
+      } else {
+          return Collections.emptyList();
+      }
+    }
 
     @Override
     public String getName() {
