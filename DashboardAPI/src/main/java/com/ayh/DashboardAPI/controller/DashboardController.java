@@ -21,6 +21,10 @@ public class DashboardController {
      * Aggregated data based on user location.
      * Includes global flight summary and weather data based on lat and lon parameters.
      * Default location is Toronto
+     *
+     * @param lat
+     * @param lon
+     * @return DashboardSummaryDTO
      */
     @GetMapping("/dashboard")
     public DashboardSummaryDTO dashboard(
@@ -34,7 +38,13 @@ public class DashboardController {
     }
 
     /**
-     * All flights within a boundary box
+     * All flights within a boundary box.
+     *
+     * @param minLat
+     * @param maxLat
+     * @param minLng
+     * @param maxLng
+     * @return FlightsInBoundsDTO
      */
     @GetMapping("/flightsInBounds")
     public FlightsInBoundsDTO flightsInBounds(
@@ -43,6 +53,10 @@ public class DashboardController {
             @RequestParam("minLng") double minLng,
             @RequestParam("maxLng") double maxLng) {
 
-
+        try {
+            return dashboardService.getFlightsInBounds(minLat, maxLat, minLng, maxLng);
+        } catch (Exception e) {
+            return new FlightsInBoundsDTO(null);
+        }
     }
 }
