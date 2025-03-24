@@ -1,7 +1,8 @@
 "use client"
-
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import { useState } from "react"
 import { Plane } from "lucide-react"
+import 'leaflet/dist/leaflet.css';
 
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -14,7 +15,17 @@ export default function FlightTrackerMap() {
         <div className="relative">
           {/* This div will be your Leaflet map container */}
           <div id="map" className="w-full h-[475px] bg-gray-100">
-            {/* Leaflet will be mounted here */}
+            <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                <Marker position={[51.505, -0.09]}>
+                    <Popup>
+                        A pretty CSS3 popup. <br /> Easily customizable.
+                    </Popup>
+                </Marker>
+            </MapContainer>
           </div>
 
           {/* Flight count overlay */}
