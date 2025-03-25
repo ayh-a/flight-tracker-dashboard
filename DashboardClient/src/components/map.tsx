@@ -180,29 +180,25 @@ export default function FlightTrackerMap() {
   };
 
   useEffect(() => {
-    // Initial fetch when component mounts and bounds exist
     if (boundsRef.current) {
       fetchFlightsData();
     }
   
-    // Set up the interval that runs every 5 seconds
     const intervalId = setInterval(() => {
       if (boundsRef.current) {
         fetchFlightsData();
       }
     }, 5000);
     
-    // Clean up the interval on component unmount
     return () => {
       clearInterval(intervalId);
     };
-  }, []); // Empty dependency array so it only runs once
+  }, []);
   
-  // Second useEffect to handle initial bounds update
   useEffect(() => {
     if (bounds) {
       boundsRef.current = bounds;
-      fetchFlightsData(); // Fetch immediately when bounds first become available
+      fetchFlightsData();
     }
   }, [bounds]);
 
