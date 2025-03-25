@@ -34,7 +34,7 @@ interface BoundsTrackerProps {
     useEffect(() => {
       if (!map) return;
       
-      // Use a timeout to ensure the map has initialized properly
+      // Use a timeout to make sure the map has loaded properly
       const timer = setTimeout(() => {
         try {
           const bounds = map.getBounds();
@@ -50,7 +50,7 @@ interface BoundsTrackerProps {
         }
       }, 500);
   
-      // For subsequent moves
+      // For moves
       const handleMoveEnd = () => {
         try {
           const newBounds = map.getBounds();
@@ -131,8 +131,7 @@ export default function FlightTrackerMap() {
   const isFetchingRef = useRef<boolean>(false);
 
   const handleBoundsChange = (newBounds: BoundingBox) => {
-    // Only update state if bounds have changed significantly
-    // This reduces unnecessary re-renders
+    // Only update state if bounds have changed by a certain amount, reduces unnecessary re-renders
     if (!boundsRef.current || 
         Math.abs(newBounds.minLat - boundsRef.current.minLat) > 0.01 ||
         Math.abs(newBounds.maxLat - boundsRef.current.maxLat) > 0.01 ||
@@ -141,7 +140,6 @@ export default function FlightTrackerMap() {
       setBounds(newBounds);
     }
     
-    // Always update the ref with latest bounds
     boundsRef.current = newBounds;
   };
 

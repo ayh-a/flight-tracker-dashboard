@@ -1,11 +1,7 @@
 import React from 'react';
 import { useDashboardData } from '../hooks/useDashboardData';
 import { FlightSummary } from './FlightSummary';
-// Import your other dashboard components once they're created
-// import { AltitudeStats } from './AltitudeStats';
-// import { VelocityStats } from './VelocityStats';
-// import { CurrentWeather } from './CurrentWeather';
-// import { FlightConditions } from './FlightConditions';
+import { FlightConditions } from './FlightConditions';
 
 export function Dashboard() {
   const { flightData, weatherData, loading, error } = useDashboardData();
@@ -19,15 +15,9 @@ export function Dashboard() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
-      <FlightSummary data={flightData} />
-      {/* Add your other dashboard components here */}
-      {/* 
-      <AltitudeStats data={flightData} />
-      <VelocityStats data={flightData} />
-      <CurrentWeather data={weatherData} />
-      <FlightConditions data={weatherData} />
-      */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 max-w-4xl mx-auto">
+        <FlightSummary data={flightData} />
+        <FlightConditions data={weatherData} />
     </div>
   );
 }
