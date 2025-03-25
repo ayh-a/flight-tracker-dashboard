@@ -71,6 +71,30 @@ function LocationUpdater() {
     return null;
   }
 
+  interface Flight {
+    geoAltitude: number | null;
+    longitude: number;
+    latitude: number;
+    velocity: number;
+    heading: number;
+    verticalRate: number | null;
+    icao24: string;
+    callsign: string;
+    onGround: boolean;
+    lastContact: number;
+    lastPositionUpdate: number;
+    originCountry: string;
+    squawk: string | null;
+    spi: boolean;
+    baroAltitude: number | null;
+    positionSource: string;
+    serials: any | null;
+  }
+ 
+  interface FlightsInBoundsDTO {
+    flights: Flight[] | null;
+  }
+
 export default function FlightTrackerMap() {
   const [flightCount, setFlightCount] = useState(0);
   const [bounds, setBounds] = useState<BoundingBox | null>(null);
