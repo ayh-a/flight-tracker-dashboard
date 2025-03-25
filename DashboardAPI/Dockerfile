@@ -11,6 +11,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew dependencies --no-daemon
 
 COPY src src/
+COPY libs libs/
 
 RUN ./gradlew build -x test --no-daemon
 
