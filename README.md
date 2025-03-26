@@ -10,7 +10,7 @@
   <h3 align="center">AirWatch</h3>
 
   <p align="center">
-    <i>airWatch is an aviation monitoring system that aggregates real-time flight and weather data</i>
+    <i>AirWatch is an aviation monitoring system that aggregates real-time flight and weather data</i>
     <br />
     <!-- <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a> -->
     <br /> 
@@ -164,7 +164,7 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [shadcn](https://ui.shadcn.com/)
+* [shadcn](https://ui.shadcn.com/){:target="_blank"}
 
 
 
