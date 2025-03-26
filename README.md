@@ -164,7 +164,7 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [shadcn](https://ui.shadcn.com/){:target="_blank"}
+* [shadcn](https://ui.shadcn.com/)
 
 
 
