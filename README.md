@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ayh-a/flight-tracker-dashboard.git">
-    <img src="images/plane.png" alt="Logo" width="80" height="80">
+    <img src="assets/images/plane.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">AirWatch</h3>
@@ -57,9 +57,8 @@
 
 - Built with **Spring Boot**, **React**, and **Docker**
 
-<p align="center"><img src="images/dashboard-map.PNG" alt="dashboard with flight markers" width="750" height="auto"></p>
+<p align="center"><img src="assets/images/dashboard-map.PNG" alt="dashboard with flight markers" width="750" height="auto"></p>
 <p align="center"><i>Interactive map with flight markers</i></p>
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -98,7 +97,6 @@ Before spinning up a docker container, you will need to:
    docker-compose up --build
    ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -123,7 +121,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <!-- See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues). -->
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -141,7 +138,6 @@ Don't forget to give the project a star!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request -->
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
@@ -169,8 +165,6 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 ## Acknowledgments
 
 * [shadcn](https://ui.shadcn.com/)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
