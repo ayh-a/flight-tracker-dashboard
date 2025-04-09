@@ -1,8 +1,6 @@
 package com.ayh.DashboardAPI.filter;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.util.Collections;
+import java.util.Date;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtParser jwtParser;
@@ -27,26 +26,57 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException, java.io.IOException {
 
-        String token = extractTokenFromCookies(request);
+        try {
+            String token = extractTokenFromCookies(request);
 
-        if (token != null) {
-            try {
-                Claims claims = jwtParser.parseClaimsJws(token).getBody();
-
-                if (claims.get("type", String.class).equals("access")) {
-                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                            claims.get("client"), null,
-                            Collections.singletonList(new SimpleGrantedAuthority("ROLE_CLIENT"))
-                    );
-
-                    SecurityContextHolder.getContext().setAuthentication(auth);
-                }
-            } catch (JwtException e) {
-                logger.warn("Invalid JWT token: " + e.getMessage());
+            if (token != null) {
+                validateAndAuthenticateToken(token, request);
             }
+        } catch (ExpiredJwtException e) {
+            logger.warn("JWT token has expired: " + e.getMessage());
+        } catch (MalformedJwtException e) {
+            logger.warn("Invalid JWT token format: " + e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            logger.warn("Unsupported JWT token: " + e.getMessage());
+        } catch (SignatureException e) {
+            logger.warn("Invalid JWT signature: " + e.getMessage());
+        } catch (JwtException e) {
+            logger.warn("Invalid JWT token: " + e.getMessage());
+        } catch (Exception e) {
+            logger.error("Error processing JWT token: " + e.getMessage(), e);
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void validateAndAuthenticateToken(String token, HttpServletRequest request) {
+        Claims claims = jwtParser.parseClaimsJws(token).getBody();
+        
+        if (!"access".equals(claims.get("type", String.class))) {
+            logger.warn("Token is not an access token");
+            return;
+        }
+
+        if (claims.getExpiration() != null && claims.getExpiration().before(new Date())) {
+            logger.warn("Token is expired");
+            return;
+        }
+
+        String client = claims.get("client", String.class);
+        if (client == null || client.isEmpty()) {
+            logger.warn("Token missing client information");
+            return;
+        }
+
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                client, null,
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_CLIENT"))
+        );
+
+        auth.setDetails(request);
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        logger.debug("Authentication set for client: " + client);
     }
 
     private String extractTokenFromCookies(HttpServletRequest request) {
