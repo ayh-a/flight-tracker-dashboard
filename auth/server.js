@@ -13,14 +13,19 @@ app.listen(3000, () => {
     console.log('Server running on port 3000');
 });
 
-const allowedOrigins = ['http://localhost', 'http://localhost:5173'];
+const allowedOrigins = ['http://localhost', 'http://localhost:5173', 'http://localhost:80', 'http://frontend'];
 
 let refreshTokens = [];
 
 let corsOptionsDelegate = function (req, callback) {
     let corsOptions;
     if (allowedOrigins.indexOf(req.header('Origin')) !== -1) {
-        corsOptions = {origin: true}
+        corsOptions = {
+            origin: true,
+            credentials: true,
+            methods: ['GET', 'POST', 'OPTIONS'],
+            allowedHeaders: ['Content-Type', 'Authorization']
+        }
     } else {
         corsOptions = {origin: false}
     }

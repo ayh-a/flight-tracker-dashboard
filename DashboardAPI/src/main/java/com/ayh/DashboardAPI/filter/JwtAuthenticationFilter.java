@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private void validateAndAuthenticateToken(String token, HttpServletRequest request) {
         Claims claims = jwtParser.parseClaimsJws(token).getBody();
-        
+
         if (!"access".equals(claims.get("type", String.class))) {
             logger.warn("Token is not an access token");
             return;
