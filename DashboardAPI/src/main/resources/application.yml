@@ -4,3 +4,5 @@ apis:
     password: ${API_PASSWORD}
   weather:
     key: ${WEATHER_API_KEY}
+jwt:
+  secret: ${JWT_ACCESS_SECRET}
