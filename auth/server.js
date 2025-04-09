@@ -163,4 +163,13 @@ app.post('/auth/revoke', cors(corsOptionsDelegate), (req, res) => {
     return res.status(200).json({ message: 'Tokens revoked successfully' });
   });
 
-  
+
+  /**
+   * Test endpoint
+   */
+  app.get('/auth/protected', validateToken, (req, res) => {
+    res.json({ 
+      message: 'You accessed a protected route', 
+      client: req.clientData.client 
+    });
+  });
