@@ -4,6 +4,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
+const tokenStorage = require('./tokenStorage');
 
 
 app.use(express.json());
@@ -14,8 +15,7 @@ app.listen(3000, () => {
 });
 
 const allowedOrigins = ['http://localhost', 'http://localhost:5173', 'http://localhost:80', 'http://frontend'];
-
-let refreshTokens = [];
+const tokens = tokenStorage.initialize(process.env.JWT_ACCESS_SECRET);
 
 let corsOptionsDelegate = function (req, callback) {
     let corsOptions;
@@ -96,8 +96,8 @@ app.post('/auth/token', cors(corsOptionsDelegate), (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   });
   
+    tokens.addToken(refreshToken);
     res.status(200).json({ message: 'Authentication successful' });
-    refreshTokens.push(refreshToken);
 });
 
 app.post('/auth/refresh', cors(corsOptionsDelegate), (req, res) => {
@@ -107,15 +107,14 @@ app.post('/auth/refresh', cors(corsOptionsDelegate), (req, res) => {
       return res.status(401).json({ message: 'Refresh token not found' });
     }
    
-    if (!refreshTokens.includes(refreshToken)) {
+    if (!tokens.hasToken(refreshToken)) {
       return res.status(403).json({ message: 'Invalid refresh token' });
     }
    
     // verify token
     try {
       const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-     
-      refreshTokens = refreshTokens.filter(token => token !== refreshToken);
+      tokens.removeToken(refreshToken);
       
       const accessToken = jwt.sign(
         { client: payload.client, type: 'access' },
@@ -130,7 +129,7 @@ app.post('/auth/refresh', cors(corsOptionsDelegate), (req, res) => {
       );
       
       // store new refresh token
-      refreshTokens.push(newRefreshToken);
+      tokens.addToken(newRefreshToken);
      
       res.cookie('access_token', accessToken, {
         httpOnly: true,
@@ -148,19 +147,21 @@ app.post('/auth/refresh', cors(corsOptionsDelegate), (req, res) => {
      
       return res.status(200).json({ message: 'Tokens refreshed successfully' });
     } catch (error) {
-      refreshTokens = refreshTokens.filter(token => token !== refreshToken);
-      return res.status(403).json({ message: 'Invalid refresh token' });
+        tokens.removeToken(refreshToken);
+        return res.status(403).json({ message: 'Invalid refresh token' });
     }
 });
 
 app.post('/auth/revoke', cors(corsOptionsDelegate), (req, res) => {
     const refreshToken = req.cookies.refresh_token;
+
+    if (refreshToken) {
+        tokens.removeToken(refreshToken);
+      }
     
     if (!refreshToken) {
       return res.status(200).json({ message: 'No token to revoke' });
     }
-    
-    refreshTokens = refreshTokens.filter(token => token !== refreshToken);
     
     res.clearCookie('access_token');
     res.clearCookie('refresh_token');
