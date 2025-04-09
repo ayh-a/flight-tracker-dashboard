@@ -37,11 +37,11 @@ axios.interceptors.response.use(
   }
 );
 
-useEffect(() => {
-  getAuthTokens();
-}, []);
-
 function App() {
+  useEffect(() => {
+    getAuthTokens();
+  }, []);
+  
   return (
     <div className="container mx-auto p-4">
       <FlightTrackerMap />
