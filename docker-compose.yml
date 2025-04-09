@@ -23,6 +23,16 @@ services:
     networks:
       - app-network
 
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    container_name: auth
+    env_file:
+      - .env
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
