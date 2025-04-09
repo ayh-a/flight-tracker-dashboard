@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
 
-app.use(express.json())
+
+app.use(express.json());
+app.use(cookieParser());
 
 app.listen(3000, () => {
     console.log('Server running on port 3000');
@@ -19,3 +24,19 @@ let corsOptionsDelegate = function (req, callback) {
     }
     callback(null, corsOptions)
 }
+
+
+app.post('/auth/token', cors(corsOptionsDelegate), (req, res) => {
+    const accessPayload = {
+        client: 'dashboard-client',
+        type: 'access'
+    }
+    // access token
+    const accessToken = jwt.sign(accessPayload, process.env.JWT_ACCESS_SECRET, {expiresIn: '15m'});
+    
+    const refreshPayload = {
+        client: 'dashboard-client',
+        type: 'refresh'
+    }
+    const refreshToken = jwt.sign(refreshPayload, process.env.JWT_REFRESH_SECRET, {expiresIn: '7d'});
+})
